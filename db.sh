@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Author: insanerask
-# Date: 2017-10-17
+# Date: 2024-10-16
 
 # Script must be run as root
 if [ "$(id -u)" != "0" ]; then
