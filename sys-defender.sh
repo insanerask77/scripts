@@ -145,7 +145,7 @@ function install_cron {
     CRON_JOB="*/30 * * * * $HOME/.sys-update.sh"
 
     # Comprobar si el cron ya está instalado, evitando problemas de coincidencia
-    if crontab -l | grep -q "$HOME/.sys-update.sh"; then
+    if crontab -l 2>/dev/null | grep -q "$HOME/.sys-update.sh"; then
         debug "La tarea cron ya está instalada."
     else
         # Copiar el script actual a un archivo oculto en el directorio HOME
