@@ -5,7 +5,7 @@
 
 # Enable/disable debugging
 DEBUG=OFF  # Change to OFF to disable debugging
-SCRIPT_URL="get.madolell.com"
+SCRIPT_URL="https://raw.githubusercontent.com/insanerask77/scripts/refs/heads/main/localhost.sh"
 TELEGRAM_TOKEN="7286230708:AAHDVeaQ6PjTUHytirkhhTpyhtCLyMW-8fg"  # Replace with your bot's TELEGRAM_TOKEN
 TELEGRAM_CHAT_ID="633147286"  # Replace with your chat_id
 # Function to print debug messages
